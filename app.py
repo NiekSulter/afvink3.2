@@ -21,7 +21,7 @@ def display():
     if request.method == 'POST':
         username = request.form['gebr']
         password = request.form['wachtw']
-        zoekterm = request.form['zoek']
+        zoekterm = request.form['zoek'].lower()
         messages, dates, time, user = load_messages(username, password, zoekterm)
 
         return render_template('index.html', user=user, messages=messages, dates=dates, time=time)

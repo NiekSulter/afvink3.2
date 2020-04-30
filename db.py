@@ -1,4 +1,5 @@
 import mysql.connector
+from flask import Markup
 
 def load_messages(username, password, zoekterm):
     conn = mysql.connector.connect(host='hannl-hlo-bioinformatica-mysqlsrv.mysql.database.azure.com',
@@ -17,7 +18,13 @@ def load_messages(username, password, zoekterm):
     time = []
     user = []
     for i in cursor:
-        messages.append(i[0])
+        if zoekterm in i[0].lower():
+            x = i[0]
+            print(x)
+            x = x.replace(zoekterm, Markup('<b>' + zoekterm + '</b>'))
+            messages.append(x)
+        else:
+            messages.append(i[0])
         dates.append(i[1])
         time.append(i[2])
         user.append(i[3])
