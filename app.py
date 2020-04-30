@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from db import load_messages
 
 app = Flask(__name__)
+app.jinja_env.globals.update(zip=zip)
 
 @app.after_request
 def add_header(r):
@@ -23,7 +24,7 @@ def display():
         zoekterm = request.form['zoek']
         messages, dates, time, user = load_messages(username, password, zoekterm)
 
-        return render_template('index.html', user=user, messages=messages, dates=dates, time=time, zip=zip)
+        return render_template('index.html', user=user, messages=messages, dates=dates, time=time)
     else:
         return render_template('index.html')
 
